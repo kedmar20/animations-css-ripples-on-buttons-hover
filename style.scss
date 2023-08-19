@@ -1,0 +1,96 @@
+// Ripples
+@mixin ripples($color, $growthField, $width, $height, $borderRadius) {
+   background: $color;
+   border-radius: $borderRadius;
+   border: none;
+   outline: none;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   width: $width + px;
+   height: $height + px;
+   &:hover:before {
+      content: "";
+      width: $width + px;
+      height: $height + px;
+      position: absolute;
+      border-radius: $borderRadius;
+      animation: ripples 0.8s ease-in-out;
+   }
+   > .icons {
+      color: icon-color($color);
+   }
+   @keyframes ripples {
+      0% {
+         border: 1px solid transparent;
+      }
+      100% {
+         border: $growthField + px solid darken($color, 12%);
+         opacity: 0;
+      }
+   }
+}
+
+@function icon-color($color) {
+   @if (lightness($color) > 50) {
+      @return darken($color, 30);
+   } @else {
+      @return lighten($color, 30);
+   }
+}
+
+// Styles
+* {
+   margin: 0;
+   padding: 0;
+   font-family: sans-serif;
+   font-weight: 300;
+}
+
+html,
+body {
+   background: #eee;
+   display: flex;
+   width: 100vw;
+   height: 100vh;
+}
+
+.left {
+   padding: 1em;
+   display: flex;
+   justify-content: center;
+   flex-flow: column nowrap;
+   align-items: center;
+   flex: 1;
+   h1,
+   p {
+      text-align: center;
+   }
+   h1 {
+      color: #413b40;
+   }
+   p {
+      color: #777;
+      font-size: 0.9em;
+      padding: 1em;
+   }
+}
+
+.right {
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   flex-flow: column wrap;
+   background: #a89ca7;
+   height: 100%;
+   flex: 1;
+}
+
+#button1 {
+   @include ripples(#fefefe, 120, 150, 150, 100%);
+}
+
+#button2 {
+   @include ripples(#fefefe, 120, 400, 80, 2%);
+}
